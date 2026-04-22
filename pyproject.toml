@@ -1,0 +1,54 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "meeting-cost-tracker"
+version = "0.1.0"
+description = "Track the real cost of Microsoft Teams meetings by participant time"
+readme = "README.md"
+license = {text = "AGPL-3.0"}
+authors = [{name = "Midtown Technology Group", email = "info@midtowntg.com"}]
+requires-python = ">=3.10"
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "License :: OSI Approved :: GNU Affero General Public License v3",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+dependencies = [
+    "typer>=0.9.0",
+    "rich>=13.0.0",
+    "pydantic>=2.0.0",
+    "pydantic-settings>=2.0.0",
+    "msgraph-sdk>=1.0.0",
+    "azure-identity>=1.15.0",
+    "pandas>=2.0.0",
+    "openpyxl>=3.1.0",
+    "python-dateutil>=2.8.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "black>=23.0.0",
+    "ruff>=0.1.0",
+]
+
+[project.scripts]
+mct = "meeting_cost_tracker.cli:main"
+meeting-cost = "meeting_cost_tracker.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/Midtown-Technology-Group/meeting-cost-tracker"
+Repository = "https://github.com/Midtown-Technology-Group/meeting-cost-tracker"
+Issues = "https://github.com/Midtown-Technology-Group/meeting-cost-tracker/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.black]
+line-length = 100
+target-version = ['py310']

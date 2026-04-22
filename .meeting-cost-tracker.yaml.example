@@ -1,0 +1,29 @@
+# Meeting Cost Tracker Configuration
+
+costs:
+  # Default hourly rate (USD) if no specific rate found
+  default_rate: 100.0
+  
+  # Per-person rates (email address -> hourly rate)
+  # Use for key people with known rates
+  person_rates:
+    # john.smith@midtowntg.com: 150.0
+    # jane.doe@client.com: 200.0
+  
+  # Role-based rates (role name -> hourly rate)
+  # These are used if role information is available
+  role_rates:
+    engineer: 100.0
+    senior_engineer: 125.0
+    manager: 150.0
+    senior_manager: 175.0
+    director: 200.0
+    vp: 250.0
+    c_level: 300.0
+    contractor: 150.0
+  
+  # Organization rates (email domain -> hourly rate)
+  # Applied when attendee email matches domain
+  org_rates:
+    # midtowntg.com: 125.0
+    # client.com: 150.0
