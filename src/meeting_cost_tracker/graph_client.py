@@ -55,7 +55,12 @@ class GraphMeetingClient:
             client_id: Azure AD app client ID. If None, uses default app.
         """
         self.tenant_id = tenant_id
-        self.client_id = client_id or "63323d6c-7f31-4fa2-bca8-eec656888e97"  # Default public client
+        if not client_id:
+            raise ValueError(
+                "client_id is required. Set it in ~/.meeting-cost-tracker/config.yaml "
+                "or environment variable MEETING_COST_TRACKER_CLIENT_ID"
+            )
+        self.client_id = client_id
         self._client: Optional[GraphServiceClient] = None
         
     def _get_token_cache_path(self) -> Path:
