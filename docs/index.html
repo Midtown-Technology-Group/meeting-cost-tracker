@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meeting Cost Tracker | Know What Your Meetings Really Cost</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="hero">
+        <div class="container">
+            <div class="logo">
+                <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="40" cy="40" r="36" stroke="currentColor" stroke-width="4"/>
+                    <text x="40" y="48" text-anchor="middle" fill="currentColor" font-size="28" font-weight="bold">$</text>
+                    <path d="M60 25L65 20M65 20L60 15M65 20H55" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                </svg>
+            </div>
+            <h1>Meeting Cost Tracker</h1>
+            <p class="tagline">Know what your meetings really cost</p>
+            <p class="description">Calculate the true cost of Microsoft Teams meetings based on participant time and hourly rates. A 60-minute meeting with 8 people at $150/hr costs <strong>$1,800</strong>. Get the data to justify fewer, shorter meetings.</p>
+            <div class="cta-buttons">
+                <a href="https://github.com/Midtown-Technology-Group/meeting-cost-tracker" class="btn btn-primary">View on GitHub</a>
+                <a href="#install" class="btn btn-secondary">Get Started</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="features">
+            <div class="container">
+                <h2>Features</h2>
+                <div class="feature-grid">
+                    <div class="feature">
+                        <div class="feature-icon">💰</div>
+                        <h3>Cost Calculation</h3>
+                        <p>Automatically calculates meeting cost: duration × attendees × hourly rate. See the real price tag of every meeting.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">📊</div>
+                        <h3>Microsoft Graph Integration</h3>
+                        <p>Pulls calendar data from Outlook/Teams. No manual data entry. Works with your existing calendar.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">⚙️</div>
+                        <h3>Flexible Cost Models</h3>
+                        <p>Per-person rates, role-based pricing, or organization-wide defaults. Configure once, analyze forever.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">📈</div>
+                        <h3>Rich Analytics</h3>
+                        <p>Top expensive meetings, attendees by cost, daily trends, organization breakdown. Spot the time sinks.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">💡</div>
+                        <h3>Savings Analysis</h3>
+                        <p>"What if meetings were 30 minutes?" or "15 minutes shorter?" Quantify the savings from optimization.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">📤</div>
+                        <h3>Export Reports</h3>
+                        <p>CSV or Excel export with charts. Share with clients, management, or use for internal billing.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="example">
+            <div class="container">
+                <h2>Example Output</h2>
+                <div class="terminal">
+                    <div class="terminal-header">
+                        <span class="dot red"></span>
+                        <span class="dot yellow"></span>
+                        <span class="dot green"></span>
+                        <span class="title">Terminal</span>
+                    </div>
+                    <div class="terminal-body">
+                        <pre><code>$ mct analyze --weeks 4
+
+<span class="highlight">Meeting Cost Summary</span>
+Total Cost: <span class="green">$45,250.00</span>
+Meetings: 127
+Hours: 312.5
+Attendee-Hours: 1,875.0
+
+<span class="highlight">Most Expensive Meetings</span>
+┏━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┳━━━━━━━━━━━┓
+┃ #  ┃ Meeting                 ┃ Duration ┃ Cost      ┃
+┡━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━╇━━━━━━━━━━━┩
+│ 1  │ Q2 Planning Session     │ 60 min   │ $3,600 🔴 │
+│ 2  │ Client Review           │ 90 min   │ $3,000 🔴 │
+│ 3  │ Team Sync               │ 30 min   │ $1,500 🟡 │
+└────┴─────────────────────────┴──────────┴───────────┘
+
+<span class="highlight">Potential Savings</span>
+If all meetings were 30 min: <span class="green">Save $12,450</span>
+If 15 min shorter: <span class="green">Save $8,320</span></code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="install" id="install">
+            <div class="container">
+                <h2>Installation</h2>
+                <div class="install-methods">
+                    <div class="install-method">
+                        <h3>From Source</h3>
+                        <div class="code-block">
+                            <code>git clone https://github.com/Midtown-Technology-Group/meeting-cost-tracker.git
+cd meeting-cost-tracker
+pip install -e .</code>
+                        </div>
+                    </div>
+                    <div class="install-method">
+                        <h3>First Run</h3>
+                        <div class="code-block">
+                            <code># Authenticate with Microsoft Graph
+mct analyze --weeks 1
+
+# Configure rates
+code ~/.meeting-cost-tracker/config.yaml</code>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="config">
+            <div class="container">
+                <h2>Configuration</h2>
+                <div class="code-example">
+                    <div class="code-header">~/.meeting-cost-tracker/config.yaml</div>
+                    <div class="code-block">
+                        <code>costs:
+  default_rate: 100.0  # Default hourly rate
+  
+  # Per-person rates
+  person_rates:
+    john.smith@company.com: 150.0
+    jane.doe@company.com: 200.0
+  
+  # Role-based rates
+  role_rates:
+    engineer: 100.0
+    manager: 150.0
+    director: 200.0
+    c_level: 300.0
+  
+  # Organization rates (by domain)
+  org_rates:
+    company.com: 125.0
+    client.com: 150.0</code>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="usage">
+            <div class="container">
+                <h2>Usage Examples</h2>
+                <div class="usage-grid">
+                    <div class="usage-item">
+                        <h3>Analyze Last 4 Weeks</h3>
+                        <code>mct analyze --weeks 4</code>
+                    </div>
+                    <div class="usage-item">
+                        <h3>Custom Date Range</h3>
+                        <code>mct analyze --start 2026-01-01 --end 2026-01-31</code>
+                    </div>
+                    <div class="usage-item">
+                        <h3>Override Default Rate</h3>
+                        <code>mct analyze --weeks 2 --rate 150</code>
+                    </div>
+                    <div class="usage-item">
+                        <h3>Export to Excel</h3>
+                        <code>mct analyze --weeks 4 --export report.xlsx</code>
+                    </div>
+                    <div class="usage-item">
+                        <h3>Show Savings Analysis</h3>
+                        <code>mct analyze --weeks 4 --savings</code>
+                    </div>
+                    <div class="usage-item">
+                        <h3>View Configuration</h3>
+                        <code>mct config</code>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="formula">
+            <div class="container">
+                <h2>Cost Formula</h2>
+                <div class="formula-box">
+                    <div class="formula">
+                        Meeting Cost = Duration (hours) × Σ Attendee Hourly Rates
+                    </div>
+                    <div class="example">
+                        <strong>Example:</strong> 60-minute meeting with 8 people at $150/hr = <span class="cost">$1,800</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="tech-stack">
+            <div class="container">
+                <h2>Built With</h2>
+                <div class="stack-list">
+                    <a href="https://python.org" class="stack-item">Python 3.10+</a>
+                    <a href="https://learn.microsoft.com/en-us/graph/" class="stack-item">Microsoft Graph API</a>
+                    <a href="https://github.com/tiangolo/typer" class="stack-item">Typer</a>
+                    <a href="https://github.com/Textualize/rich" class="stack-item">Rich</a>
+                    <a href="https://pandas.pydata.org/" class="stack-item">Pandas</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>Built by <a href="https://midtowntg.com">Midtown Technology Group</a></p>
+            <p>Open source under AGPL-3.0</p>
+            <div class="footer-links">
+                <a href="https://github.com/Midtown-Technology-Group/meeting-cost-tracker">GitHub</a>
+                <a href="https://github.com/Midtown-Technology-Group/meeting-cost-tracker/issues">Issues</a>
+                <a href="https://github.com/Midtown-Technology-Group/meeting-cost-tracker/blob/main/LICENSE">License</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,461 @@
+/* Meeting Cost Tracker - Project Site Styles */
+
+:root {
+    --primary: #f59e0b;
+    --primary-dark: #d97706;
+    --secondary: #fbbf24;
+    --accent: #10b981;
+    --bg: #0f172a;
+    --bg-light: #1e293b;
+    --text: #f8fafc;
+    --text-muted: #94a3b8;
+    --border: #334155;
+    --radius: 12px;
+    --terminal-bg: #0d1117;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+/* Hero */
+.hero {
+    text-align: center;
+    padding: 100px 24px 80px;
+    background: linear-gradient(135deg, var(--bg) 0%, var(--bg-light) 100%);
+}
+
+.logo {
+    color: var(--primary);
+    margin-bottom: 24px;
+}
+
+.hero h1 {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 16px;
+    background: linear-gradient(135deg, var(--text) 0%, var(--secondary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.tagline {
+    font-size: 1.5rem;
+    color: var(--secondary);
+    font-weight: 500;
+    margin-bottom: 16px;
+}
+
+.description {
+    font-size: 1.125rem;
+    color: var(--text-muted);
+    max-width: 600px;
+    margin: 0 auto 32px;
+}
+
+.description strong {
+    color: var(--primary);
+}
+
+.cta-buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn {
+    padding: 14px 28px;
+    border-radius: var(--radius);
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: var(--text);
+    border: 2px solid var(--border);
+}
+
+.btn-secondary:hover {
+    border-color: var(--secondary);
+    color: var(--secondary);
+}
+
+/* Features */
+.features {
+    padding: 80px 0;
+}
+
+.features h2 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 48px;
+}
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 32px;
+}
+
+.feature {
+    background: var(--bg-light);
+    padding: 32px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    transition: all 0.2s;
+}
+
+.feature:hover {
+    border-color: var(--primary);
+    transform: translateY(-4px);
+}
+
+.feature-icon {
+    font-size: 2rem;
+    margin-bottom: 16px;
+}
+
+.feature h3 {
+    font-size: 1.25rem;
+    margin-bottom: 12px;
+    color: var(--text);
+}
+
+.feature p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+}
+
+/* Example Terminal */
+.example {
+    padding: 80px 0;
+    background: var(--bg-light);
+}
+
+.example h2 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 48px;
+}
+
+.terminal {
+    max-width: 800px;
+    margin: 0 auto;
+    background: var(--terminal-bg);
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+}
+
+.terminal-header {
+    background: #161b22;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid var(--border);
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+.dot.red { background: #ff5f56; }
+.dot.yellow { background: #ffbd2e; }
+.dot.green { background: #27ca40; }
+
+.terminal-header .title {
+    margin-left: 8px;
+    color: var(--text-muted);
+    font-size: 0.875rem;
+}
+
+.terminal-body {
+    padding: 20px;
+    overflow-x: auto;
+}
+
+.terminal-body pre {
+    margin: 0;
+    font-family: 'Fira Code', 'Consolas', monospace;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--text);
+}
+
+.terminal-body .highlight {
+    color: var(--primary);
+    font-weight: 600;
+}
+
+.terminal-body .green {
+    color: var(--accent);
+    font-weight: 600;
+}
+
+/* Installation */
+.install {
+    padding: 80px 0;
+}
+
+.install h2 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 48px;
+}
+
+.install-methods {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 32px;
+}
+
+.install-method {
+    background: var(--bg-light);
+    padding: 24px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+}
+
+.install-method h3 {
+    margin-bottom: 16px;
+    color: var(--secondary);
+}
+
+.code-block {
+    background: #000;
+    padding: 20px;
+    border-radius: 8px;
+    overflow-x: auto;
+}
+
+.code-block code {
+    font-family: 'Fira Code', 'Consolas', monospace;
+    font-size: 0.85rem;
+    color: var(--text);
+    line-height: 1.8;
+    white-space: pre;
+}
+
+/* Config Example */
+.config {
+    padding: 80px 0;
+    background: var(--bg-light);
+}
+
+.config h2 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 48px;
+}
+
+.code-example {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.code-header {
+    background: var(--bg);
+    padding: 12px 20px;
+    border-radius: 8px 8px 0 0;
+    border: 1px solid var(--border);
+    border-bottom: none;
+    color: var(--text-muted);
+    font-size: 0.875rem;
+}
+
+.code-example .code-block {
+    border-radius: 0 0 8px 8px;
+}
+
+/* Usage */
+.usage {
+    padding: 80px 0;
+}
+
+.usage h2 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 48px;
+}
+
+.usage-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+}
+
+.usage-item {
+    background: var(--bg-light);
+    padding: 24px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+}
+
+.usage-item h3 {
+    font-size: 1rem;
+    margin-bottom: 12px;
+    color: var(--text-muted);
+}
+
+.usage-item code {
+    display: block;
+    background: #000;
+    padding: 12px;
+    border-radius: 6px;
+    font-family: 'Fira Code', 'Consolas', monospace;
+    font-size: 0.85rem;
+    color: var(--secondary);
+}
+
+/* Formula */
+.formula {
+    padding: 80px 0;
+    background: var(--bg-light);
+}
+
+.formula h2 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 48px;
+}
+
+.formula-box {
+    max-width: 600px;
+    margin: 0 auto;
+    background: var(--bg);
+    padding: 40px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    text-align: center;
+}
+
+.formula {
+    font-size: 1.25rem;
+    font-family: 'Fira Code', 'Consolas', monospace;
+    color: var(--primary);
+    margin-bottom: 24px;
+}
+
+.formula-box .example {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+}
+
+.formula-box .cost {
+    color: var(--accent);
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+/* Tech Stack */
+.tech-stack {
+    padding: 80px 0;
+}
+
+.tech-stack h2 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 32px;
+}
+
+.stack-list {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.stack-item {
+    padding: 12px 24px;
+    background: var(--bg-light);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.stack-item:hover {
+    border-color: var(--secondary);
+    color: var(--secondary);
+}
+
+/* Footer */
+footer {
+    padding: 48px 0;
+    text-align: center;
+    border-top: 1px solid var(--border);
+}
+
+footer p {
+    color: var(--text-muted);
+    margin-bottom: 8px;
+}
+
+footer a {
+    color: var(--secondary);
+    text-decoration: none;
+}
+
+.footer-links {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    margin-top: 24px;
+}
+
+.footer-links a {
+    color: var(--text-muted);
+    transition: color 0.2s;
+}
+
+.footer-links a:hover {
+    color: var(--text);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+    
+    .tagline {
+        font-size: 1.25rem;
+    }
+    
+    .install-methods {
+        grid-template-columns: 1fr;
+    }
+}
