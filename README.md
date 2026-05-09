@@ -73,3 +73,7 @@ Example: A 60-minute meeting with 8 people at $150/hr = **$1,800**
 ## License
 
 AGPL-3.0
+
+## Windows MSI
+
+Tagged releases build a per-machine Windows MSI that installs `mct.exe` under `Program Files` and adds that install directory to the system PATH. Installing or uninstalling the MSI requires an elevated prompt.
