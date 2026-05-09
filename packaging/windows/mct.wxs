@@ -1,0 +1,41 @@
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <Package
+    Name="Meeting Cost Tracker"
+    Manufacturer="Midtown Technology Group LLC"
+    Version="$(var.Version)"
+    UpgradeCode="{E88C097D-4803-5F1D-8497-1D9BAE6539F7}"
+    InstallerVersion="500"
+    Scope="perMachine">
+
+    <SummaryInformation Description="Meeting Cost Tracker installer" Manufacturer="Midtown Technology Group LLC" />
+    <MajorUpgrade DowngradeErrorMessage="A newer version of Meeting Cost Tracker is already installed." />
+    <MediaTemplate EmbedCab="yes" />
+
+    <StandardDirectory Id="ProgramFiles64Folder">
+      <Directory Id="INSTALLROOT" Name="Midtown Technology Group">
+        <Directory Id="INSTALLFOLDER" Name="Meeting Cost Tracker" />
+      </Directory>
+    </StandardDirectory>
+
+    <Feature Id="MainFeature" Title="Meeting Cost Tracker" Level="1">
+      <ComponentGroupRef Id="ToolComponents" />
+    </Feature>
+
+    <ComponentGroup Id="ToolComponents" Directory="INSTALLFOLDER">
+      <Component Id="ToolExecutableComponent" Guid="*">
+        <File Id="ToolExecutable" Source="$(var.BinDir)\mct.exe" KeyPath="yes" />
+      </Component>
+      <Component Id="PathComponent" Guid="{AD31A199-2172-5FC1-BCFC-28718432751A}">
+        <CreateFolder />
+        <Environment
+          Id="ToolPathEntry"
+          Action="set"
+          Name="PATH"
+          Part="last"
+          Permanent="no"
+          System="yes"
+          Value="[INSTALLFOLDER]" />
+      </Component>
+    </ComponentGroup>
+  </Package>
+</Wix>
