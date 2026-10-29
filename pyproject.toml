@@ -38,8 +38,8 @@ dev = [
 ]
 
 [project.scripts]
-mct = "meeting_cost_tracker.cli:main"
-meeting-cost = "meeting_cost_tracker.cli:main"
+mct = "meeting_cost_tracker.cli:cli_main"
+meeting-cost = "meeting_cost_tracker.cli:cli_main"
 
 [project.urls]
 Homepage = "https://github.com/Midtown-Technology-Group/meeting-cost-tracker"

@@ -13,8 +13,8 @@ from dataclasses import dataclass
 
 from azure.identity import DeviceCodeCredential, TokenCachePersistenceOptions
 from msgraph import GraphServiceClient
-from msgraph.generated.me.calendar.get_schedule.get_schedule_request_builder import GetScheduleRequestBuilder
-from msgraph.generated.me.events.events_request_builder import EventsRequestBuilder
+from kiota_abstractions.base_request_configuration import RequestConfiguration
+from msgraph.generated.users.item.calendar_view.calendar_view_request_builder import CalendarViewRequestBuilder
 
 
 @dataclass
@@ -117,18 +117,16 @@ class GraphMeetingClient:
         client = self._authenticate()
         
         # Format dates for Graph API
-        start_str = start_date.strftime("%Y-%m-%dT%H:%M:%S")
-        end_str = end_date.strftime("%Y-%m-%dT%H:%M:%S")
-        
-        # Get calendar view (includes recurring meetings)
-        request_builder = EventsRequestBuilder(
-            client.me.events.request_builder.raw_url,
-            client.request_adapter,
-        )
-        
-        # Build request with query parameters
-        from msgraph.generated.me.events.events_request_builder import EventsRequestBuilderGetQueryParameters
-        query_params = EventsRequestBuilderGetQueryParameters(
+        if start_date.tzinfo is None:
+            start_date = start_date.astimezone()
+        if end_date.tzinfo is None:
+            end_date = end_date.astimezone()
+        start_str = start_date.isoformat()
+        end_str = end_date.isoformat()
+
+        # Calendar view expands recurring meetings within the requested range.
+        request_builder = client.me.calendar_view
+        query_params = CalendarViewRequestBuilder.CalendarViewRequestBuilderGetQueryParameters(
             start_date_time=start_str,
             end_date_time=end_str,
             select=["id", "subject", "start", "end", "organizer", "attendees", 
@@ -136,17 +134,20 @@ class GraphMeetingClient:
             top=500,  # Max per page
         )
         
-        request_config = EventsRequestBuilder.EventsRequestBuilderGetRequestConfiguration(
-            query_parameters=query_params,
-        )
-        
-        response = await client.me.events.get(request_configuration=request_config)
-        
+        request_config = RequestConfiguration(query_parameters=query_params)
+        response = await request_builder.get(request_configuration=request_config)
+
         meetings = []
-        if response and response.value:
-            for event in response.value:
-                meeting = self._parse_event(event)
-                meetings.append(meeting)
+        requested_links = set()
+        while response:
+            for event in response.value or []:
+                meetings.append(self._parse_event(event))
+            if not response.odata_next_link:
+                break
+            if response.odata_next_link in requested_links:
+                raise ValueError("Repeated calendar pagination link")
+            requested_links.add(response.odata_next_link)
+            response = await request_builder.with_url(response.odata_next_link).get()
         
         return meetings
     
