@@ -6,8 +6,8 @@ from types import SimpleNamespace
 from unittest.mock import AsyncMock, Mock
 
 from msgraph import GraphServiceClient
-from msgraph.generated.models.event import Event
 from msgraph.generated.models.date_time_time_zone import DateTimeTimeZone
+from msgraph.generated.models.event import Event
 from msgraph.generated.models.event_collection_response import EventCollectionResponse
 
 
@@ -17,15 +17,18 @@ def test_calendar_view_uses_date_range_and_follows_pages():
     adapter = Mock()
     adapter.base_url = "https://graph.microsoft.com/v1.0"
     event = Event(
-        id="synthetic", subject="Offline meeting",
+        id="synthetic",
+        subject="Offline meeting",
         start=DateTimeTimeZone(date_time="2026-10-01T10:00:00", time_zone="UTC"),
         end=DateTimeTimeZone(date_time="2026-10-01T11:00:00", time_zone="UTC"),
     )
     next_link = "https://graph.microsoft.com/v1.0/me/calendarView?$skiptoken=synthetic"
-    adapter.send_async = AsyncMock(side_effect=[
-        EventCollectionResponse(value=[event], odata_next_link=next_link),
-        EventCollectionResponse(value=[event]),
-    ])
+    adapter.send_async = AsyncMock(
+        side_effect=[
+            EventCollectionResponse(value=[event], odata_next_link=next_link),
+            EventCollectionResponse(value=[event]),
+        ]
+    )
     client = GraphMeetingClient(client_id="offline-test")
     client._client = GraphServiceClient(request_adapter=adapter)
     start = datetime(2026, 10, 1, tzinfo=timezone.utc)
