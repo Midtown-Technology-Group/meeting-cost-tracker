@@ -117,6 +117,10 @@ class GraphMeetingClient:
         client = self._authenticate()
         
         # Format dates for Graph API
+        if start_date.tzinfo is None:
+            start_date = start_date.astimezone()
+        if end_date.tzinfo is None:
+            end_date = end_date.astimezone()
         start_str = start_date.isoformat()
         end_str = end_date.isoformat()
 
@@ -134,11 +138,15 @@ class GraphMeetingClient:
         response = await request_builder.get(request_configuration=request_config)
 
         meetings = []
+        requested_links = set()
         while response:
             for event in response.value or []:
                 meetings.append(self._parse_event(event))
             if not response.odata_next_link:
                 break
+            if response.odata_next_link in requested_links:
+                raise ValueError("Repeated calendar pagination link")
+            requested_links.add(response.odata_next_link)
             response = await request_builder.with_url(response.odata_next_link).get()
         
         return meetings

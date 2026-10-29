@@ -52,3 +52,55 @@ def test_empty_calendar_view():
     client = GraphMeetingClient(client_id="offline-test")
     client._client = SimpleNamespace(me=SimpleNamespace(calendar_view=calendar_view))
     assert asyncio.run(client.get_meetings(datetime(2026, 10, 1), datetime(2026, 10, 2))) == []
+
+
+class LocalDateTime(datetime):
+    def astimezone(self, tz=None):
+        from datetime import timedelta
+
+        return self.replace(tzinfo=timezone(timedelta(hours=-4)))
+
+
+def test_naive_bounds_receive_local_offsets():
+    from meeting_cost_tracker.graph_client import GraphMeetingClient
+
+    calendar_view = SimpleNamespace(get=AsyncMock(return_value=None))
+    client = GraphMeetingClient(client_id="offline-test")
+    client._client = SimpleNamespace(me=SimpleNamespace(calendar_view=calendar_view))
+    asyncio.run(client.get_meetings(LocalDateTime(2026, 10, 1), LocalDateTime(2026, 10, 2)))
+    query = calendar_view.get.call_args.kwargs["request_configuration"].query_parameters
+    assert query.start_date_time == "2026-10-01T00:00:00-04:00"
+    assert query.end_date_time == "2026-10-02T00:00:00-04:00"
+
+
+def test_aware_bounds_preserve_supplied_offsets():
+    from datetime import timedelta
+
+    from meeting_cost_tracker.graph_client import GraphMeetingClient
+
+    calendar_view = SimpleNamespace(get=AsyncMock(return_value=None))
+    client = GraphMeetingClient(client_id="offline-test")
+    client._client = SimpleNamespace(me=SimpleNamespace(calendar_view=calendar_view))
+    offset = timezone(timedelta(hours=5, minutes=30))
+    start = LocalDateTime(2026, 10, 1, tzinfo=offset)
+    end = LocalDateTime(2026, 10, 2, tzinfo=offset)
+    asyncio.run(client.get_meetings(start, end))
+    query = calendar_view.get.call_args.kwargs["request_configuration"].query_parameters
+    assert query.start_date_time == "2026-10-01T00:00:00+05:30"
+    assert query.end_date_time == "2026-10-02T00:00:00+05:30"
+
+
+def test_pagination_cycle_raises_instead_of_returning_partial_results():
+    import pytest
+
+    from meeting_cost_tracker.graph_client import GraphMeetingClient
+
+    link = "https://graph.microsoft.com/v1.0/me/calendarView?$skiptoken=repeat"
+    page = EventCollectionResponse(value=[], odata_next_link=link)
+    calendar_view = SimpleNamespace(get=AsyncMock(side_effect=[page, page, None]))
+    calendar_view.with_url = Mock(return_value=calendar_view)
+    client = GraphMeetingClient(client_id="offline-test")
+    client._client = SimpleNamespace(me=SimpleNamespace(calendar_view=calendar_view))
+    with pytest.raises(ValueError, match="Repeated calendar pagination link"):
+        asyncio.run(client.get_meetings(datetime(2026, 10, 1), datetime(2026, 10, 2)))
+    assert calendar_view.get.await_count == 2
