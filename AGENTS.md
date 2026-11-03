@@ -13,3 +13,12 @@ No test files or pytest configuration were found in the current default tree, de
 Require a user-configured client ID; retain `common` as the tenant default for multi-tenant use. Never introduce shared credential defaults. Preserve least-privilege calendar access, user-only token-cache permissions, confidential per-person rates, and secure report storage. Do not commit tokens, cost models, real attendee lists, or reports. Calculations are estimates from configured rates, not verified payroll costs. The security page documents a filesystem-protected token cache; do not claim encryption without inspecting implementation.
 
 CLI options must be verified in `cli.py`; documentation alone is insufficient. Export and analysis are distinct read/write surfaces. Inspect the Windows MSI workflow and build script before tag/release work; publishing, installation, or live Graph access requires the exact authorized scope.
+
+## Secret gate before publication
+
+Before every push and PR creation/update, commit the complete candidate and run
+`python3 scripts/secret_gate.py` (native Windows: `python`). Require exit 0;
+missing tooling/authentication, scan errors and skipped scans block publication.
+Then run the existing repository gates. Repeat after changing outgoing commits.
+See [secret scanning](SECRET-SCANNING.md) for base selection, new branches,
+pre-push input and prerequisites. Preserve GitGuardian App, CI and Gitleaks checks.
